@@ -1,0 +1,66 @@
+{
+  "name": "instruction-cli",
+  "version": "1.0.0",
+  "description": "✅ A powerful, modern CLI to manage all of life's instructions, from to-do lists to wishlists.",
+  "main": "inst.js",
+  "type": "module",
+  "bin": {
+    "inst": "inst.js"
+  },
+  "scripts": {
+    "start": "node inst.js",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "test": "node inst.js --version"
+  },
+  "files": [
+    "inst.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sajjad-developer/instruction-cli.git"
+  },
+  "homepage": "https://github.com/sajjad-developer/instruction-cli#readme",
+  "bugs": {
+    "url": "https://github.com/sajjad-developer/instruction-cli/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cli",
+    "todo",
+    "task",
+    "productivity",
+    "instructions",
+    "terminal",
+    "command-line",
+    "list-manager",
+    "utility"
+  ],
+  "author": {
+    "name": "Md Sajjad Hossen",
+    "url": "https://eco-starfish-coder.com"
+  },
+  "license": "MIT",
+  "funding": {
+    "url": "https://eco-starfish-coder.com/tip"
+  },
+  "dependencies": {
+    "chalk": "^5.5.0",
+    "chalk-animation": "^2.0.3",
+    "chrono-node": "^2.8.3",
+    "pdf-lib": "^1.17.1",
+    "yargs": "^18.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.32.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2"
+  }
+}
