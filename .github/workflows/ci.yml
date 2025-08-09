@@ -38,4 +38,4 @@ jobs:
         run: npm run lint --if-present
 
       - name: Run startup check (smoke test)
-        run: node expense.js --version
+        run: node inst.js --version
