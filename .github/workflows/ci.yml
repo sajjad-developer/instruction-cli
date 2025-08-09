@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         # Using .x ensures the latest patch release for each version is used
-        node-version: [18.x, 20.x, 22.x, 24.x]
+        node-version: [20.x, 22.x, 24.x]
 
     steps:
       - name: Checkout repository

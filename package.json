@@ -28,7 +28,7 @@
     "url": "https://github.com/sajjad-developer/instruction-cli/issues"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "keywords": [
     "cli",
