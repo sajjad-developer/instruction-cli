@@ -1906,12 +1906,7 @@ async function main() {
             type: "number",
             requiresArg: true,
           })
-          .option("year", {
-            describe: "Filter by year",
-            type: "number",
-            requiresArg: true,
-          })
-          .option("priority", {
+          .option("year",.option("priority", {
             describe: "Filter by priority",
             type: "string",
             requiresArg: true,
