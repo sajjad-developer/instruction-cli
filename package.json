@@ -52,7 +52,7 @@
   "dependencies": {
     "chalk": "^5.5.0",
     "chalk-animation": "^2.0.3",
-    "chrono-node": "^2.8.3",
+    "chrono-node": "^2.8.4",
     "pdf-lib": "^1.17.1",
     "yargs": "^18.0.0"
   },
