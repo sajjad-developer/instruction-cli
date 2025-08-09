@@ -195,7 +195,7 @@ const commandDetails = {
 function displayCustomHelp(command) {
   console.log(chalk.bold.cyan("\n📖 Inst CLI"));
   console.log(
-    chalk.white("A powerful tool to manage all of life's instructions.")
+    chalk.white("A powerful tool to manage all of life's instructions."),
   );
 
   if (command && commandDetails[command]) {
@@ -203,7 +203,7 @@ function displayCustomHelp(command) {
     console.log(chalk.yellow(`\nHelp for command: ${chalk.bold(command)}`));
     console.log(chalk.white(`\n  ${details.description}`));
     console.log(
-      chalk.white(`\n${chalk.bold("Usage:")} ${chalk.green(details.usage)}`)
+      chalk.white(`\n${chalk.bold("Usage:")} ${chalk.green(details.usage)}`),
     );
 
     if (details.options) {
@@ -215,23 +215,23 @@ function displayCustomHelp(command) {
   } else {
     console.log(
       chalk.white(
-        `\n${chalk.bold("Usage:")} ${chalk.green("inst <command> [options]")}`
-      )
+        `\n${chalk.bold("Usage:")} ${chalk.green("inst <command> [options]")}`,
+      ),
     );
     console.log(chalk.bold("\nAvailable Commands:"));
     Object.entries(commandDetails).forEach(([cmd, details]) => {
       const alias = Object.entries(yargs().getOptions().alias).find(
-        ([key, val]) => val.includes(cmd)
+        ([_key, val]) => val.includes(cmd),
       )?.[0];
       const commandString = alias ? `${cmd}, ${alias}` : cmd;
       console.log(
-        `  ${chalk.green(commandString.padEnd(15))} ${chalk.white(details.description)}`
+        `  ${chalk.green(commandString.padEnd(15))} ${chalk.white(details.description)}`,
       );
     });
     console.log(
       chalk.yellow(
-        "\nRun 'inst help <command>' for more details on a specific command."
-      )
+        "\nRun 'inst help <command>' for more details on a specific command.",
+      ),
     );
   }
   console.log("");
@@ -264,7 +264,7 @@ function stopLoadingMessage() {
     readline.clearLine(process.stdout, 1);
     if (durationMs > 100) {
       console.log(
-        chalk.gray(`Operation completed in ${durationMs.toFixed(2)} ms.`)
+        chalk.gray(`Operation completed in ${durationMs.toFixed(2)} ms.`),
       );
     }
     loadingInterval = null;
@@ -286,9 +286,9 @@ function ensureDataFilesExist() {
   } catch (error) {
     console.error(
       chalk.red.bold(
-        "❌ Critical Error: Could not create necessary data files."
+        "❌ Critical Error: Could not create necessary data files.",
       ),
-      error
+      error,
     );
     process.exit(1);
   }
@@ -300,7 +300,9 @@ const loadInstructions = async () => {
   } catch {
     stopLoadingMessage();
     console.error(
-      chalk.red("⚠️  Warning: Could not parse data file. Returning empty list.")
+      chalk.red(
+        "⚠️  Warning: Could not parse data file. Returning empty list.",
+      ),
     );
     return [];
   }
@@ -397,7 +399,7 @@ function findSuggestion(unknown, list) {
         return { minDistance: dist, match: item };
       return best;
     },
-    { minDistance: Infinity, match: null }
+    { minDistance: Infinity, match: null },
   ).match;
 }
 
@@ -444,7 +446,7 @@ function openFile(filePath) {
   } catch (err) {
     console.error(
       chalk.red(`Failed to open file. Please open it manually:\n${filePath}`),
-      err
+      err,
     );
   }
 }
@@ -453,8 +455,8 @@ function showNoResultsFeedback() {
   console.log(chalk.yellow("\n📭 No instructions match your filters."));
   console.log(
     chalk.blue(
-      "💡 Tip: Try broadening your search or use 'inst show --all' to include deleted items."
-    )
+      "💡 Tip: Try broadening your search or use 'inst show --all' to include deleted items.",
+    ),
   );
 }
 
@@ -470,17 +472,17 @@ function filterInstructions(instructions, filters) {
 
   if (filters.priority) {
     filteredData = filteredData.filter(
-      (inst) => inst.priority === filters.priority
+      (inst) => inst.priority === filters.priority,
     );
   }
   if (filters.source) {
     filteredData = filteredData.filter(
-      (inst) => inst.source.toLowerCase() === filters.source.toLowerCase()
+      (inst) => inst.source.toLowerCase() === filters.source.toLowerCase(),
     );
   }
   if (filters.status) {
     filteredData = filteredData.filter(
-      (inst) => inst.status === filters.status
+      (inst) => inst.status === filters.status,
     );
   }
   if (filters.deadline) {
@@ -547,7 +549,7 @@ function generateFileNameAndTitle(options) {
     if (timeParts.length > 0) {
       titleParts.push(`for ${timeParts.join(" ")}`);
       filenameParts.push(
-        ...timeParts.map((p) => p.toLowerCase().replace(/ /g, "-"))
+        ...timeParts.map((p) => p.toLowerCase().replace(/ /g, "-")),
       );
     }
   }
@@ -608,7 +610,7 @@ const weekCoercion = (week) => {
   if (week !== undefined) {
     if (typeof week !== "number" || week < 1 || week > 5) {
       throw new Error(
-        `Invalid week value: The week must be a number between 1 and 5.`
+        `Invalid week value: The week must be a number between 1 and 5.`,
       );
     }
   }
@@ -683,7 +685,7 @@ function wrapTextForPdf(text, maxWidth, font, fontSize) {
 async function createPdfReport(
   instructions,
   titleLabel,
-  showDeletedAt = false
+  showDeletedAt = false,
 ) {
   const pdfDoc = await PDFDocument.create();
   const [font, boldFont] = await Promise.all([
@@ -779,11 +781,11 @@ async function createPdfReport(
     // Sanitize user-provided text fields to remove newlines before PDF creation
     const sanitizedText = String(inst.text || "").replace(
       /(\r\n|\n|\r)/gm,
-      " "
+      " ",
     );
     const sanitizedSource = String(inst.source || "").replace(
       /(\r\n|\n|\r)/gm,
-      " "
+      " ",
     );
 
     const rowData = [
@@ -797,12 +799,12 @@ async function createPdfReport(
     ];
     if (showDeletedAt) {
       rowData.push(
-        inst.deletedAt ? new Date(inst.deletedAt).toLocaleDateString() : "N/A"
+        inst.deletedAt ? new Date(inst.deletedAt).toLocaleDateString() : "N/A",
       );
     }
 
     const wrappedRow = rowData.map((cellText, i) =>
-      wrapTextForPdf(cellText, colWidths[i] - 4, font, fontSize)
+      wrapTextForPdf(cellText, colWidths[i] - 4, font, fontSize),
     );
     const rowHeight =
       Math.max(...wrappedRow.map((lines) => lines.length)) *
@@ -845,8 +847,9 @@ async function createPdfReport(
 
 const stripAnsi = (str) =>
   str.replace(
+    // eslint-disable-next-line no-control-regex
     /[\u001b\u009b][[()#;?]*.{0,2}(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
-    ""
+    "",
   );
 
 async function generateManualPdf(argv) {
@@ -892,7 +895,7 @@ async function generateManualPdf(argv) {
         text,
         width - 2 * margin - indent,
         textFont,
-        size
+        size,
       );
       addPageIfNeeded(lines.length * size * spacing);
       lines.forEach((line) => {
@@ -951,7 +954,7 @@ async function generateManualPdf(argv) {
     y -= 15;
     addText(
       "Welcome to Inst CLI, a powerful and intuitive tool for managing all of life's instructions directly from your terminal. This guide will walk you through all the available commands and their options.",
-      { size: 11 }
+      { size: 11 },
     );
 
     // --- Commands Section ---
@@ -1010,7 +1013,7 @@ async function generateManualPdf(argv) {
     const pdfBytes = await pdfDoc.save();
     const filePath = path.join(
       getDownloadsFolder(),
-      `inst_manual_${Date.now()}.pdf`
+      `inst_manual_${Date.now()}.pdf`,
     );
     await writeFile(filePath, pdfBytes);
 
@@ -1030,7 +1033,7 @@ async function generateManualPdf(argv) {
 }
 
 // --- Custom Failure Handler ---
-function customFailureHandler(msg, err, yargs) {
+function customFailureHandler(msg, err, _yargs) {
   const command = process.argv[2];
   const errorMessage = msg || (err && err.message) || "";
   console.error();
@@ -1038,16 +1041,16 @@ function customFailureHandler(msg, err, yargs) {
   if (errorMessage.includes("Invalid week value")) {
     console.error(chalk.red(`❌ Error: Invalid value for --week.`));
     console.error(
-      chalk.yellow(`\n💡 The week must be a number between 1 and 5.`)
+      chalk.yellow(`\n💡 The week must be a number between 1 and 5.`),
     );
   } else if (errorMessage.includes("Invalid month:")) {
     console.error(
-      chalk.red(`❌ Error: ${errorMessage.replace("Invalid month: ", "")}`)
+      chalk.red(`❌ Error: ${errorMessage.replace("Invalid month: ", "")}`),
     );
     console.error(
       chalk.yellow(
-        `\n💡 Please use a month name (e.g., "August"), abbreviation (e.g., "Aug"), or number (1-12).`
-      )
+        `\n💡 Please use a month name (e.g., "August"), abbreviation (e.g., "Aug"), or number (1-12).`,
+      ),
     );
   } else if (
     errorMessage.includes("week filter must be used with the --month")
@@ -1055,8 +1058,8 @@ function customFailureHandler(msg, err, yargs) {
     console.error(chalk.red(`❌ Error: ${errorMessage}`));
     console.error(
       chalk.yellow(
-        `\n💡 Please specify which month you want to filter by week (e.g., --week 1 --month 8).`
-      )
+        `\n💡 Please specify which month you want to filter by week (e.g., --week 1 --month 8).`,
+      ),
     );
   } else if (
     errorMessage.includes("Cannot use --date with other time filters")
@@ -1064,8 +1067,8 @@ function customFailureHandler(msg, err, yargs) {
     console.error(chalk.red(`❌ Error: ${errorMessage}`));
     console.error(
       chalk.yellow(
-        `\n💡 Use either '--date' or broader filters like '--month', but not both.`
-      )
+        `\n💡 Use either '--date' or broader filters like '--month', but not both.`,
+      ),
     );
   } else if (msg && msg.startsWith("Unknown argument")) {
     const unknownOption = msg.split(":")[1].trim();
@@ -1078,19 +1081,19 @@ function customFailureHandler(msg, err, yargs) {
     const option = msg.split(":")[1].trim();
     const prefix = option.length === 1 ? "-" : "--";
     console.error(
-      chalk.red(`❌ Error: The '${prefix}${option}' option requires a value.`)
+      chalk.red(`❌ Error: The '${prefix}${option}' option requires a value.`),
     );
     if (optionChoices[option]) {
       console.error(
         chalk.yellow(
-          `\n💡 Please provide one of the available choices: ${optionChoices[option].join(", ")}.`
-        )
+          `\n💡 Please provide one of the available choices: ${optionChoices[option].join(", ")}.`,
+        ),
       );
     } else {
       console.error(
         chalk.yellow(
-          `\n💡 Please provide a value after the ${prefix}${option} flag.`
-        )
+          `\n💡 Please provide a value after the ${prefix}${option} flag.`,
+        ),
       );
     }
   } else if (msg && msg.includes("Missing required argument")) {
@@ -1105,26 +1108,26 @@ function customFailureHandler(msg, err, yargs) {
       (alias && rawArgs.includes(alias))
     ) {
       console.error(
-        chalk.red(`❌ Error: The '--${missingArg}' option requires a value.`)
+        chalk.red(`❌ Error: The '--${missingArg}' option requires a value.`),
       );
       if (optionChoices[missingArg]) {
         console.error(
           chalk.yellow(
-            `\n💡 Please provide one of the available choices: ${optionChoices[missingArg].join(", ")}.`
-          )
+            `\n💡 Please provide one of the available choices: ${optionChoices[missingArg].join(", ")}.`,
+          ),
         );
       } else {
         console.error(
           chalk.yellow(
-            `\n💡 Please provide a value after the --${missingArg} flag (e.g., --${missingArg} 123).`
-          )
+            `\n💡 Please provide a value after the --${missingArg} flag (e.g., --${missingArg} 123).`,
+          ),
         );
       }
     } else {
       console.error(
         chalk.red(
-          `❌ Error: The '--${missingArg}' option is required for the '${command}' command.`
-        )
+          `❌ Error: The '--${missingArg}' option is required for the '${command}' command.`,
+        ),
       );
       console.error(chalk.yellow(`\n💡 Please provide the missing option.`));
     }
@@ -1136,25 +1139,27 @@ function customFailureHandler(msg, err, yargs) {
 
     if (givenValue === null || givenValue === "") {
       console.error(
-        chalk.red(`❌ Error: The '--${arg}' option requires a value.`)
+        chalk.red(`❌ Error: The '--${arg}' option requires a value.`),
       );
       if (optionChoices[arg]) {
         console.error(
           chalk.yellow(
-            `\n💡 Please provide one of the available choices: ${optionChoices[arg].join(", ")}.`
-          )
+            `\n💡 Please provide one of the available choices: ${optionChoices[arg].join(", ")}.`,
+          ),
         );
       }
     } else {
       console.error(
-        chalk.red(`❌ Error: Invalid value provided for the '--${arg}' option.`)
+        chalk.red(
+          `❌ Error: Invalid value provided for the '--${arg}' option.`,
+        ),
       );
       const choicesMatch = msg.match(/Allowed: (.*)/);
       if (choicesMatch && choicesMatch[1]) {
         console.error(
           chalk.yellow(
-            `\n💡 Please choose one of the following: ${choicesMatch[1]}`
-          )
+            `\n💡 Please choose one of the following: ${choicesMatch[1]}`,
+          ),
         );
       }
     }
@@ -1196,7 +1201,7 @@ function customFailureHandler(msg, err, yargs) {
     console.error(chalk.green(`\n✅ Example: ${example}`));
   }
   console.error(
-    chalk.blue(`\nFor more help, run: inst ${command || ""} --help`)
+    chalk.blue(`\nFor more help, run: inst ${command || ""} --help`),
   );
   process.exit(1);
 }
@@ -1255,17 +1260,17 @@ async function main() {
     if (!allValidCommands.has(potentialCommand)) {
       const suggestion = findSuggestion(
         potentialCommand,
-        Array.from(allValidCommands)
+        Array.from(allValidCommands),
       );
       if (suggestion) {
         console.error(
           chalk.red(
-            `\n❌ Unknown command '${potentialCommand}'. Did you mean ${chalk.bold(suggestion)}?`
-          )
+            `\n❌ Unknown command '${potentialCommand}'. Did you mean ${chalk.bold(suggestion)}?`,
+          ),
         );
         if (helpRequested) {
           console.log(
-            chalk.yellow(`\nShowing help for '${suggestion}' instead.`)
+            chalk.yellow(`\nShowing help for '${suggestion}' instead.`),
           );
           displayCustomHelp(suggestion);
         }
@@ -1273,8 +1278,8 @@ async function main() {
         console.error(chalk.red(`\n❌ Unknown command '${potentialCommand}'.`));
         console.log(
           chalk.blue(
-            `\nFor a list of available commands, type: ${chalk.bold("inst --help")}`
-          )
+            `\nFor a list of available commands, type: ${chalk.bold("inst --help")}`,
+          ),
         );
       }
       process.exit(1);
@@ -1337,8 +1342,8 @@ async function main() {
           if (argv.deadline && !deadlineDate) {
             console.log(
               chalk.red.bold(
-                "❌ Invalid deadline format. Could not parse the date."
-              )
+                "❌ Invalid deadline format. Could not parse the date.",
+              ),
             );
             return;
           }
@@ -1358,7 +1363,7 @@ async function main() {
           console.log(`   - ID: ${newId}`);
           console.log(`   - Source: ${argv.source}`);
           console.log(
-            chalk.yellow("💡 Tip: Use 'inst undo' to revert this change.")
+            chalk.yellow("💡 Tip: Use 'inst undo' to revert this change."),
           );
         } finally {
           stopLoadingMessage();
@@ -1438,7 +1443,7 @@ async function main() {
           filtered.sort(
             (a, b) =>
               (CONFIG.PRIORITY_ORDER[a.priority] || 4) -
-              (CONFIG.PRIORITY_ORDER[b.priority] || 4)
+              (CONFIG.PRIORITY_ORDER[b.priority] || 4),
           );
 
           filtered.forEach((inst) => {
@@ -1530,21 +1535,21 @@ async function main() {
         try {
           const instructions = await loadInstructions();
           const instIndex = instructions.findIndex(
-            (inst) => inst.id === argv.id
+            (inst) => inst.id === argv.id,
           );
           if (instIndex === -1) {
             console.log(
               chalk.yellow(
-                `ℹ️ This ID does not exist. No instruction found with ID: ${argv.id}`
-              )
+                `ℹ️ This ID does not exist. No instruction found with ID: ${argv.id}`,
+              ),
             );
             return;
           }
           if (instructions[instIndex].isDeleted) {
             console.log(
               chalk.yellow(
-                `ℹ️  Cannot edit a deleted instruction. Recover first.`
-              )
+                `ℹ️  Cannot edit a deleted instruction. Recover first.`,
+              ),
             );
             return;
           }
@@ -1583,13 +1588,13 @@ async function main() {
             console.log(chalk.green.bold("\n✅ Instruction Updated"));
             console.log(`   - ID: ${argv.id}`);
             console.log(
-              chalk.blue("💡 Tip: Use 'inst show' to see your changes.")
+              chalk.blue("💡 Tip: Use 'inst show' to see your changes."),
             );
           } else {
             console.log(
               chalk.yellow(
-                `\nℹ️  No changes provided. To edit, supply an option like --priority or --instruction.`
-              )
+                `\nℹ️  No changes provided. To edit, supply an option like --priority or --instruction.`,
+              ),
             );
             console.log(chalk.green(`   Example: ${commandExamples.edit}`));
           }
@@ -1623,29 +1628,29 @@ async function main() {
         try {
           const instructions = await loadInstructions();
           const instIndex = instructions.findIndex(
-            (inst) => inst.id === argv.id
+            (inst) => inst.id === argv.id,
           );
           if (instIndex === -1) {
             console.log(
               chalk.yellow(
-                `ℹ️ This ID does not exist. No instruction found with ID: ${argv.id}`
-              )
+                `ℹ️ This ID does not exist. No instruction found with ID: ${argv.id}`,
+              ),
             );
             return;
           }
           if (instructions[instIndex].isDeleted) {
             console.log(
               chalk.yellow(
-                `ℹ️  Cannot mark a deleted instruction. Please recover it first.`
-              )
+                `ℹ️  Cannot mark a deleted instruction. Please recover it first.`,
+              ),
             );
             return;
           }
           if (instructions[instIndex].status === argv.status) {
             console.log(
               chalk.yellow(
-                `\nℹ️  Instruction #${argv.id} is already marked as "${argv.status}". No change made.\n`
-              )
+                `\nℹ️  Instruction #${argv.id} is already marked as "${argv.status}". No change made.\n`,
+              ),
             );
             return;
           }
@@ -1659,13 +1664,13 @@ async function main() {
           stopLoadingMessage();
           if (argv.status === "completed") {
             const animation = chalkAnimation.rainbow(
-              `\n🎉 Instruction #${argv.id} Completed! Well done! 🎉`
+              `\n🎉 Instruction #${argv.id} Completed! Well done! 🎉`,
             );
             await new Promise((resolve) => setTimeout(resolve, 2000));
             animation.stop();
           } else {
             console.log(
-              chalk.green.bold(`\n✅ Status Updated for ID: ${argv.id}`)
+              chalk.green.bold(`\n✅ Status Updated for ID: ${argv.id}`),
             );
             console.log(`   - From: ${oldStatus}`);
             console.log(`   - To: ${argv.status}`);
@@ -1693,13 +1698,13 @@ async function main() {
         try {
           const instructions = await loadInstructions();
           const instIndex = instructions.findIndex(
-            (inst) => inst.id === argv.id && !inst.isDeleted
+            (inst) => inst.id === argv.id && !inst.isDeleted,
           );
           if (instIndex === -1) {
             console.log(
               chalk.yellow(
-                `ℹ️ This ID does not exist or is already deleted. No active instruction found with ID: ${argv.id}`
-              )
+                `ℹ️ This ID does not exist or is already deleted. No active instruction found with ID: ${argv.id}`,
+              ),
             );
             return;
           }
@@ -1707,8 +1712,8 @@ async function main() {
           if (
             await promptConfirmation(
               chalk.red.bold(
-                `⚠️  Are you sure you want to delete instruction #${argv.id}?`
-              )
+                `⚠️  Are you sure you want to delete instruction #${argv.id}?`,
+              ),
             )
           ) {
             await pushToUndoStack("delete");
@@ -1720,8 +1725,8 @@ async function main() {
             console.log(`   - ID: ${argv.id}`);
             console.log(
               chalk.yellow(
-                `💡 Tip: Use 'inst recover --id ${argv.id}' to restore it.`
-              )
+                `💡 Tip: Use 'inst recover --id ${argv.id}' to restore it.`,
+              ),
             );
           } else {
             console.log(chalk.yellow("\nOperation cancelled."));
@@ -1749,13 +1754,13 @@ async function main() {
         try {
           const instructions = await loadInstructions();
           const instIndex = instructions.findIndex(
-            (inst) => inst.id === argv.id
+            (inst) => inst.id === argv.id,
           );
           if (instIndex === -1 || !instructions[instIndex].isDeleted) {
             console.log(
               chalk.yellow(
-                `ℹ️ This ID does not exist or is not deleted. No deleted instruction found with ID: ${argv.id}`
-              )
+                `ℹ️ This ID does not exist or is not deleted. No deleted instruction found with ID: ${argv.id}`,
+              ),
             );
             return;
           }
@@ -1781,8 +1786,8 @@ async function main() {
           if (
             await promptConfirmation(
               chalk.red.bold(
-                "⚠️ DANGER: This will erase ALL instructions. Are you sure?"
-              )
+                "⚠️ DANGER: This will erase ALL instructions. Are you sure?",
+              ),
             )
           ) {
             await pushToUndoStack("reset");
@@ -1791,8 +1796,8 @@ async function main() {
             console.log(chalk.green.bold("\n✅ All Instructions Erased"));
             console.log(
               chalk.yellow(
-                "💡 Tip: Use 'inst undo' immediately to revert this action."
-              )
+                "💡 Tip: Use 'inst undo' immediately to revert this action.",
+              ),
             );
           } else {
             console.log(chalk.yellow("\nOperation cancelled."));
@@ -1814,7 +1819,7 @@ async function main() {
         const lastCommand = undoStack[undoStack.length - 1].command;
         if (
           await promptConfirmation(
-            chalk.yellow(`Undo the last '${lastCommand}' operation?`)
+            chalk.yellow(`Undo the last '${lastCommand}' operation?`),
           )
         ) {
           startLoadingMessage("Undoing operation");
@@ -1824,7 +1829,7 @@ async function main() {
             console.log(chalk.green.bold(`\n✅ Operation Undone`));
             console.log(`   - Reverted: '${undoneCommand}'`);
             console.log(
-              chalk.blue(`💡 Tip: Use 'inst redo' to re-apply the change.`)
+              chalk.blue(`💡 Tip: Use 'inst redo' to re-apply the change.`),
             );
           }
         } else {
@@ -1844,7 +1849,7 @@ async function main() {
         const nextCommand = redoStack[redoStack.length - 1].command;
         if (
           await promptConfirmation(
-            chalk.blue(`Redo the last '${nextCommand}' operation?`)
+            chalk.blue(`Redo the last '${nextCommand}' operation?`),
           )
         ) {
           startLoadingMessage("Redoing operation");
@@ -1935,8 +1940,8 @@ async function main() {
           console.log(chalk.blueBright(`\n📊 Total for: ${titleLabel}`));
           console.log(
             chalk.green.bold(
-              `   Found ${filtered.length} instruction${filtered.length === 1 ? "" : "s"}.\n`
-            )
+              `   Found ${filtered.length} instruction${filtered.length === 1 ? "" : "s"}.\n`,
+            ),
           );
         } finally {
           stopLoadingMessage();
@@ -2019,7 +2024,7 @@ async function main() {
           const { filenameLabel, titleLabel } = generateFileNameAndTitle(argv);
           const filePath = path.join(
             getDownloadsFolder(),
-            `${filenameLabel}_${Date.now()}.${argv.format}`
+            `${filenameLabel}_${Date.now()}.${argv.format}`,
           );
 
           if (argv.format === "csv") {
@@ -2041,7 +2046,7 @@ async function main() {
                   i.deletedAt ? new Date(i.deletedAt).toLocaleString() : "",
                 ]
                   .map(escapeCsv)
-                  .join(",")
+                  .join(","),
               )
               .join("\n");
             await writeFile(filePath, "\uFEFF" + headers + rows, "utf-8");
@@ -2049,7 +2054,7 @@ async function main() {
             const pdfBytes = await createPdfReport(
               instructions,
               titleLabel,
-              argv.all
+              argv.all,
             );
             await writeFile(filePath, pdfBytes);
           }
